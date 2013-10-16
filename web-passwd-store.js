@@ -58,43 +58,43 @@
             },
             
             paypal_route: function () {
-                var login_email_elem = document.querySelector('#login_email')
-                var login_password_elem = document.querySelector('#login_password')
+                var username_elem = document.querySelector('#login_email')
+                var password_elem = document.querySelector('#login_password')
                 
-                if (!login_email_elem || !login_password_elem) {
+                if (!username_elem || !password_elem) {
                     module.async_alert(module.INVALID_LOGIN_PAGE_ERROR_MSG)
                     return
                 }
                 
-                var login_email = login_email_elem.value
+                var username = username_elem.value
                 
-                if (!login_email) {
+                if (!username) {
                     module.async_alert(module.USERNAME_NOT_ENTERED_ERROR_MSG)
                     return
                 }
                 
-                var storage_name = module.LOCALSTORAGE_PREFIX + '/paypal/password_for/' + login_email
+                var storage_name = module.LOCALSTORAGE_PREFIX + '/paypal/password_for/' + username
                 
-                var login_password = login_password_elem.value
+                var password = password_elem.value
                 
-                if (!login_password) {
+                if (!password) {
                     // restoring password
                     
-                    login_password = localStorage[storage_name]
+                    password = localStorage[storage_name]
                     
-                    if (login_password === undefined) {
+                    if (password === undefined) {
                         module.async_alert(module.USERNAME_NOT_FOUND_ERROR_MSG)
                         return
                     }
                     
-                    login_password_elem.value = login_password
+                    password_elem.value = password
                     
                     return
                 }
                 
                 // storing password
                 
-                localStorage[storage_name] = login_password
+                localStorage[storage_name] = password
             },
             
             main: function () {
