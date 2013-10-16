@@ -97,11 +97,60 @@
                 localStorage[storage_name] = password
             },
             
+            qiwi_route: function () {
+                var username_elem = document.querySelector('#phone')
+                var password_elem = document.querySelector('#password')
+                
+                if (!username_elem || !password_elem) {
+                    module.async_alert(module.INVALID_LOGIN_PAGE_ERROR_MSG)
+                    return
+                }
+                
+                var username = username_elem.value
+                
+                if (!username) {
+                    module.async_alert(module.USERNAME_NOT_ENTERED_ERROR_MSG)
+                    return
+                }
+                
+                var storage_name = module.LOCALSTORAGE_PREFIX + '/qiwi/password_for/' + username
+                
+                var password = password_elem.value
+                
+                if (!password) {
+                    // restoring password
+                    
+                    password = localStorage[storage_name]
+                    
+                    if (password === undefined) {
+                        module.async_alert(module.USERNAME_NOT_FOUND_ERROR_MSG)
+                        return
+                    }
+                    
+                    password_elem.value = password
+                    
+                    return
+                }
+                
+                // storing password
+                
+                localStorage[storage_name] = password
+            },
+            
             main: function () {
                 switch (location.hostname) {
                     case 'paypal.com':
                     case 'www.paypal.com':
                         module.paypal_route()
+                        break
+                    
+                    case 'qiwi.com':
+                    case 'www.qiwi.com':
+                    case 'visa.qiwi.com':
+                    case 'qiwi.ru':
+                    case 'www.qiwi.ru':
+                    case 'visa.qiwi.ru':
+                        module.qiwi_route()
                         break
                     
                     default:
